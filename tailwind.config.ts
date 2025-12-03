@@ -16,7 +16,7 @@ module.exports = {
 
       slg: "950px",
 
-      lg: "1050px",
+      lg: "1024px",
       // => @media (min-width: 1024px) { ... }
 
       xl: "1280px",
@@ -26,9 +26,27 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
-      colors: {},
+      colors: {
+        "body-dark": "#171717",
+        "body-light": "#e5e5e5",
+        "navbar-light": "#dbdedd",
+        "navbar-dark": "#262626",
+        "border-grey": "#404040",
+        "navbar-light-b": "#c9c9c9",
+        "blue-text": "#242736",
+        "site-orange": "#ec5c29",
+        "site-orange-hover": "#ef7449",
+        "site-light-blue": "",
+        "site-transparent-orange": "rgba(236, 92, 41, .2)",
+        "site-transparent-blue": "rgba(36, 39, 54, .7)",
+        "site-text-gray": "#808080",
+        "site-green": "#6ee7b7",
+        "site-green-light": "#047857",
+      },
       backgroundImage: {},
-      fontFamily: {},
+      fontFamily: {
+        roboto: ["'Roboto'", "sans-serif"],
+      },
     },
   },
   plugins: [],
