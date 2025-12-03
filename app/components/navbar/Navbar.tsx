@@ -1,23 +1,15 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faClose,
-  faCog,
-  faMoon,
-  faSun,
-} from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faBars, faClose, faCog } from "@fortawesome/free-solid-svg-icons";
 import { navLinksArray } from "../../constants";
 import { useState } from "react";
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <>
-      <nav className="sticky z-10 -top-20 transition duration-300 bg-navbar-dark flex justify-between items-center w-full py-2 px-8 border border-border-grey mx-auto mt-8 rounded-full shadow-x">
-        <a
-          href="/dashboard"
-          className="font-bold text-lg md:text-xl xl:text-2xl"
-        >
+      <nav className="sticky z-10 -top-20 transition duration-300 bg-navbar-dark flex justify-between items-center w-full py-2 px-8 border border-border-grey mx-auto mt-4 xl:mt-8 rounded-full shadow-x">
+        <a href="/" className="font-bold text-lg md:text-xl xl:text-2xl">
           DayarNG
         </a>
         <div className=" hidden md:flex gap-4 lg:gap-8">
@@ -39,7 +31,7 @@ function Navbar() {
 
         <div className="flex  items-center gap-3 text-sm relative">
           <a>
-            <FontAwesomeIcon icon={faCog} />
+            <FontAwesomeIcon icon={faCog as IconProp} />
           </a>
 
           <button
@@ -51,7 +43,7 @@ function Navbar() {
             <span className="absolute bg-site-orange w-6 h-6 rounded-full text-white -top-3 -right-5 font-bold border border-white">
               3
             </span>
-            <FontAwesomeIcon icon={faBars} className="text-lg" />
+            <FontAwesomeIcon icon={faBars as IconProp} className="text-lg" />
           </button>
         </div>
       </nav>
@@ -67,7 +59,7 @@ function Navbar() {
             setNavOpen(false);
           }}
         >
-          <FontAwesomeIcon icon={faClose} />
+          <FontAwesomeIcon icon={faClose as IconProp} />
         </button>
         <div className="flex flex-col gap-4">
           {navLinksArray.map((item) => (

@@ -2,7 +2,7 @@ import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AccountsInfoCardProps } from "@types";
 import { addCommasToAmounts } from "@utils";
-
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 function AccountsInfoCard({
   title,
   amount,
@@ -18,7 +18,7 @@ function AccountsInfoCard({
         </p>
       </div>
       <span className="w-8 h-8 xl:w-10 xl:h-10 bg-site-orange flex justify-center items-center rounded-full text-lg xl:text-2xl">
-        <FontAwesomeIcon icon={faDollarSign} />
+        <FontAwesomeIcon icon={faDollarSign as IconProp} />
       </span>
     </div>
   );
