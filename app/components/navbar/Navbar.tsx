@@ -8,7 +8,7 @@ function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <>
-      <nav className="sticky z-10 -top-20 transition duration-300 bg-navbar-dark flex justify-between items-center w-full py-2 px-8 border border-border-grey mx-auto mt-4 xl:mt-8 rounded-full shadow-x">
+      <nav className="sticky z-10 -top-20 transition duration-300 bg-site-lighter-grey flex justify-between items-center w-full py-2 px-4 xl:px-8 border border-border-grey mx-auto my-4 xl:mt-8 rounded-full shadow-x">
         <a href="/" className="font-bold text-lg md:text-xl xl:text-2xl">
           DayarNG
         </a>
@@ -40,7 +40,7 @@ function Navbar() {
               setNavOpen(true);
             }}
           >
-            <span className="absolute bg-site-orange w-6 h-6 rounded-full text-white -top-3 -right-5 font-bold border border-white">
+            <span className="absolute bg-site-orange w-6 h-6 rounded-full text-white -top-3 -right-3 font-bold border border-white">
               3
             </span>
             <FontAwesomeIcon icon={faBars as IconProp} className="text-lg" />
@@ -49,7 +49,7 @@ function Navbar() {
       </nav>
 
       <div
-        className={`bg-body-dark fixed p-8 rounded-s-[3em] block md:hidden top-0 w-9/12 sm:w-96 right-0 h-screen z-20 transition duration-200 shadow-2xl ${
+        className={`bg-site-lighter-grey fixed p-8 rounded-s-[3em] block md:hidden top-0 w-9/12 sm:w-96 right-0 h-screen z-20 transition duration-200 shadow-2xl ${
           navOpen ? " translate-x-0" : "translate-x-[105%]"
         }`}
       >

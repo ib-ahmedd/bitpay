@@ -1,11 +1,11 @@
 export const navLinksArray = [
   {
     title: "Dashboard",
-    href: "",
+    href: "/",
   },
   {
     title: "Pending Payments(0)",
-    href: "",
+    href: "/pending-payments",
   },
   {
     title: "Pending Releases(0)",
