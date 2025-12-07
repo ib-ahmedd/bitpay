@@ -31,3 +31,25 @@ export interface PageTitleBarProps {
   children?: React.ReactNode;
   page: string;
 }
+
+export interface AuthInputProps {
+  type: string;
+  name: string;
+  value: string;
+  placeholder: string;
+}
+
+export interface AuthSubmitBtnProps {
+  text: string;
+  func?: () => void;
+}
+
+export interface LoginSignUpSwitchBarProps {
+  onScreen: string;
+  setOnScreen: Dispatch<SetStateAction<string>>;
+}
+
+export interface AuthModalsProps {
+  onScreen: string;
+  setOnScreen: Dispatch<SetStateAction<string>>;
+}

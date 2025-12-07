@@ -12,7 +12,7 @@ const RootLayout = ({ children }: LayoutProps) => {
     <html lang="en">
       <body className="relative w-full transition duration-100 bg-site-dark-grey text-white px-4 xl:px-20 box-border ">
         <ReduxProvider>
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
         </ReduxProvider>
       </body>
