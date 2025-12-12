@@ -1,8 +1,13 @@
 import { AuthModalsProps } from "@types";
-import AuthInput from "./authInput";
+import AuthInput from "./AuthInput";
 import AuthSubmitBtn from "./AuthSubmitBtn";
+import AuthFormContainer from "./AuthFormContainer";
+import { useContext } from "react";
+import { AuthPageContext } from "./AuthPageContext";
 
-function ForgotPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
+function ForgotPasswordModal() {
+  const { onScreen, setOnScreen, userDetails, handleUserDetails } =
+    useContext(AuthPageContext);
   function handleRequestOTP() {
     setOnScreen("reset-otp");
   }
@@ -25,17 +30,23 @@ function ForgotPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
     }
   }
 
+  const { email } = userDetails;
+
   return (
-    <form
-      className={`w-full md:w-[30em] bg-site-lighter-grey border-border-grey rounded-3xl p-4 flex flex-col items-center gap-3 border absolute transition-all ${handleModalPosition()}`}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <AuthFormContainer
+      errorMessage=""
+      handleModalPosition={handleModalPosition}
+      handleSubmit={handleRequestOTP}
     >
       <h2 className="text-2xl font-bold">Forgot Password</h2>
-      <AuthInput type="email" name="email" value="" placeholder="Enter email" />
-      <AuthSubmitBtn text="Reset Password" func={handleRequestOTP} />
-      <div className="w-full flex px-6 ">
+      <AuthInput
+        type="email"
+        name="email"
+        value={email}
+        placeholder="Enter email"
+      />
+      <AuthSubmitBtn text="Reset Password" />
+      <div className="w-full flex justify-end px-6 ">
         <button
           className="text-site-orange font-bold underline"
           onClick={() => {
@@ -45,7 +56,7 @@ function ForgotPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
           Sign in
         </button>
       </div>
-    </form>
+    </AuthFormContainer>
   );
 }
 

@@ -38,7 +38,7 @@ module.exports = {
         "site-text-gray": "#808080",
         "site-green": "#6ee7b7",
         "site-transparent-green": "rgba(0, 231, 0, 0.1)",
-        "site-transparent-red": "rgba(185, 0, 0, 0.3)",
+        "site-transparent-red": "rgba(256, 50, 50, 0.1)",
         "site-green-light": "#047857",
       },
       backgroundImage: {},

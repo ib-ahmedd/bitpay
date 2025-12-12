@@ -1,32 +1,61 @@
 "use client";
 import { useState } from "react";
 import EmailModal from "./components/EmailModal";
-import LoginSignUpSwitchBar from "./components/LoginSignUpSwitchBar";
 import LoginModal from "./components/LoginModal";
 import OTPModal from "./components/OTPModal";
 import ForgotPasswordModal from "./components/ForgotPasswordModal";
 import ResetPasswordModal from "./components/ResetPasswordModal";
+import CompleteSignUpModal from "./components/CompleteSignUpModal";
+import { AuthModalOptions, AuthUserDetails } from "@types";
+import { AuthPageContext } from "./components/AuthPageContext";
 
 function Auth() {
-  const [onScreen, setOnScreen] = useState("login");
-  const [userDetails, setUserDetails] = useState({
+  const [onScreen, setOnScreen] = useState<AuthModalOptions>("login");
+  const [userDetails, setUserDetails] = useState<AuthUserDetails>({
     email: "",
     password: "",
     confPassword: "",
     api_key: "",
     api_secret: "",
   });
+
+  const [authAccessToken, setAuthAccessToken] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleUserDetails(event: any) {
+    const { name, value } = event.target;
+    setUserDetails((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+
+  const contextValue = {
+    onScreen,
+    setOnScreen,
+    userDetails,
+    setUserDetails,
+    authAccessToken,
+    setAuthAccessToken,
+    loading,
+    setLoading,
+    errorMessage,
+    setErrorMessage,
+    handleUserDetails,
+  };
   return (
-    <main className="flex h-[100vh] justify-center items-center w-full overflow-x-hidden">
-      {/* <LoginSignUpSwitchBar onScreen={onScreen} setOnScreen={setOnScreen} /> */}
-      <div className="relative w-full md:w-[30em] h-[30em]">
-        <ForgotPasswordModal onScreen={onScreen} setOnScreen={setOnScreen} />
-        <LoginModal onScreen={onScreen} setOnScreen={setOnScreen} />
-        <EmailModal onScreen={onScreen} setOnScreen={setOnScreen} />
-        <OTPModal onScreen={onScreen} setOnScreen={setOnScreen} />
-        <ResetPasswordModal onScreen={onScreen} setOnScreen={setOnScreen} />
-      </div>
-    </main>
+    <AuthPageContext.Provider value={contextValue}>
+      <main className="flex flex-col h-[100vh] justify-center items-center w-full overflow-x-hidden">
+        <div className="relative w-full md:w-[30em] h-[30em]">
+          <ForgotPasswordModal />
+          <LoginModal />
+          <EmailModal />
+          <OTPModal />
+          <ResetPasswordModal />
+          <CompleteSignUpModal />
+        </div>
+      </main>
+    </AuthPageContext.Provider>
   );
 }
 

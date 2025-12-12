@@ -1,8 +1,10 @@
-import { AuthModalsProps } from "@types";
-import AuthInput from "./authInput";
+import AuthInput from "./AuthInput";
 import AuthSubmitBtn from "./AuthSubmitBtn";
+import AuthFormContainer from "./AuthFormContainer";
+import { useContext } from "react";
+import { AuthPageContext } from "./AuthPageContext";
 
-function LoginModal({ onScreen, setOnScreen }: AuthModalsProps) {
+function LoginModal() {
   function handleModalPosition() {
     const positionOnScreen = "translate-x-0 opacity-100";
     const positionLeftOfScreen = "translate-x-[-100%] opacity-0";
@@ -13,26 +15,34 @@ function LoginModal({ onScreen, setOnScreen }: AuthModalsProps) {
     } else if (
       onScreen === "forgot-password" ||
       onScreen === "reset-password" ||
-      onScreen === "reset-otp"
+      onScreen === "reset-otp" ||
+      onScreen === "complete"
     ) {
       return positionRightOfScreen;
     } else if (onScreen === "otp" || onScreen === "signup") {
       return positionLeftOfScreen;
     }
   }
+  const { onScreen, setOnScreen, handleUserDetails, userDetails } =
+    useContext(AuthPageContext);
+  const { email, password } = userDetails;
   return (
-    <form
-      className={`w-full md:w-[30em] bg-site-lighter-grey border-border-grey rounded-3xl p-2 lg:p-4 flex flex-col items-center gap-3 border absolute  transition-all ${handleModalPosition()}`}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <AuthFormContainer
+      errorMessage=""
+      handleModalPosition={handleModalPosition}
+      handleSubmit={() => {}}
     >
       <h2 className="text-lg lg:text-2xl font-bold">Sign In</h2>
-      <AuthInput type="email" name="email" value="" placeholder="Enter email" />
+      <AuthInput
+        type="email"
+        name="email"
+        value={email}
+        placeholder="Enter email"
+      />
       <AuthInput
         type="password"
         name="password"
-        value=""
+        value={password}
         placeholder="Enter password"
       />
 
@@ -55,7 +65,7 @@ function LoginModal({ onScreen, setOnScreen }: AuthModalsProps) {
           Sign up
         </button>
       </div>
-    </form>
+    </AuthFormContainer>
   );
 }
 

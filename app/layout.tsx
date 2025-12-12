@@ -5,7 +5,6 @@ import Hero from "./components/hero/Hero";
 import ReduxProvider from "@store/ReduxProvider";
 import Navbar from "./components/navbar/Navbar";
 import { LayoutProps } from "@types";
-import PageTitleBar from "@components/PageTitleBar";
 
 const RootLayout = ({ children }: LayoutProps) => {
   return (

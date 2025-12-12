@@ -1,12 +1,16 @@
 import { AuthModalsProps } from "@types";
-import AuthInput from "./authInput";
+import AuthInput from "./AuthInput";
 import AuthSubmitBtn from "./AuthSubmitBtn";
+import AuthFormContainer from "./AuthFormContainer";
+import { useContext } from "react";
+import { AuthPageContext } from "./AuthPageContext";
 
-function ResetPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
+function ResetPasswordModal() {
+  const { onScreen, setOnScreen, handleUserDetails } =
+    useContext(AuthPageContext);
   function handleModalPosition() {
     const positionOnScreen = "translate-x-0 opacity-100";
     const positionLeftOfScreen = "translate-x-[-100%] opacity-0";
-    const positionRightOfScreen = "translate-x-[100%] opacity-0";
 
     if (onScreen === "reset-password") {
       return positionOnScreen;
@@ -19,11 +23,10 @@ function ResetPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
     setOnScreen("login");
   }
   return (
-    <form
-      className={`w-full md:w-[30em] bg-site-lighter-grey border-border-grey rounded-3xl p-4 flex flex-col items-center gap-3 border absolute  transition-all ${handleModalPosition()}`}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <AuthFormContainer
+      errorMessage=""
+      handleModalPosition={handleModalPosition}
+      handleSubmit={handleResetPassword}
     >
       <h2 className="text-lg lg:text-2xl font-bold">Reset Password</h2>
 
@@ -40,8 +43,8 @@ function ResetPasswordModal({ onScreen, setOnScreen }: AuthModalsProps) {
         placeholder="Confirm password"
       />
 
-      <AuthSubmitBtn text="Reset Password" func={handleResetPassword} />
-    </form>
+      <AuthSubmitBtn text="Reset Password" />
+    </AuthFormContainer>
   );
 }
 

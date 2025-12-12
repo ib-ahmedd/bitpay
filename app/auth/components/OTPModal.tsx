@@ -1,7 +1,15 @@
 import { AuthModalsProps } from "@types";
 import AuthSubmitBtn from "./AuthSubmitBtn";
+import axios from "axios";
+import { useContext, useState } from "react";
+import AuthFormContainer from "./AuthFormContainer";
+import { AuthPageContext } from "./AuthPageContext";
 
-function OTPModal({ onScreen, setOnScreen }: AuthModalsProps) {
+function OTPModal() {
+  const { onScreen, setOnScreen, userDetails, setAuthToken } =
+    useContext(AuthPageContext);
+  const [code, setCode] = useState("");
+  const { email } = userDetails;
   function handleModalPosition() {
     const positionOnScreen = "translate-x-0 opacity-100";
     const positionLeftOfScreen = "translate-x-[-100%] opacity-0";
@@ -16,17 +24,34 @@ function OTPModal({ onScreen, setOnScreen }: AuthModalsProps) {
     }
   }
 
-  function handleSubmitOTP() {
-    if (onScreen === "reset-otp") {
-      setOnScreen("reset-password");
+  async function handleSubmitOTP() {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/verify-otp",
+        {
+          email: email,
+          code: code,
+        }
+      );
+
+      const { data } = response;
+      if (setAuthToken) {
+        setAuthToken(data);
+      }
+      if (onScreen === "reset-otp") {
+        setOnScreen("reset-password");
+      } else if (onScreen === "otp") {
+        setOnScreen("complete");
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   return (
-    <form
-      className={`w-full md:w-[30em] bg-site-lighter-grey border-border-grey rounded-3xl p-4 flex flex-col items-center gap-1 border absolute transition-all ${handleModalPosition()}`}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+    <AuthFormContainer
+      errorMessage=""
+      handleModalPosition={handleModalPosition}
+      handleSubmit={handleSubmitOTP}
     >
       <h2 className="text-lg lg:text-2xl font-bold">Verify Email</h2>
       <p className="text-center">
@@ -35,9 +60,13 @@ function OTPModal({ onScreen, setOnScreen }: AuthModalsProps) {
       <input
         className="w-1/2 text-black px-6 py-2 border-border-grey outline-none rounded-full box-border text-center text-2xl"
         type="text"
-        name="otp"
+        name="code"
+        required
+        onChange={(e) => {
+          setCode(e.target.value);
+        }}
       />
-      <AuthSubmitBtn text="Verify" func={handleSubmitOTP} />
+      <AuthSubmitBtn text="Verify" />
       <div className="flex justify-between w-full px-6">
         <button
           className="text-site-orange font-bold underline"
@@ -51,7 +80,7 @@ function OTPModal({ onScreen, setOnScreen }: AuthModalsProps) {
           Resend OTP
         </button>
       </div>
-    </form>
+    </AuthFormContainer>
   );
 }
 
