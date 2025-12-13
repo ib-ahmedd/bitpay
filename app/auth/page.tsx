@@ -45,8 +45,8 @@ function Auth() {
   };
   return (
     <AuthPageContext.Provider value={contextValue}>
-      <main className="flex flex-col h-[100vh] justify-center items-center w-full overflow-x-hidden">
-        <div className="relative w-full md:w-[30em] h-[30em]">
+      <main className="flex flex-col h-[100vh] justify-center items-center w-full overflow-x-hidden box-border">
+        <div className="relative w-full md:w-[30em] h-[100vh] box-border flex items-center">
           <ForgotPasswordModal />
           <LoginModal />
           <EmailModal />

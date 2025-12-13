@@ -18,7 +18,7 @@ function AuthInput({
       value={value}
       placeholder={placeholder}
       disabled={disabled ? disabled : false}
-      className="w-full text-black text-base lg:text-lg px-6 py-1 lg:py-3 border-border-grey outline-none rounded-full box-border"
+      className="w-full text-black text-base lg:text-lg px-4 lg:px-6 py-3 border-border-grey outline-none rounded-full box-border"
       onChange={handleUserDetails}
     />
   );

@@ -15,7 +15,7 @@ function AuthFormContainer({
         handleSubmit();
       }}
     >
-      <div className="flex flex-col p-4 w-full gap-4 items-center">
+      <div className="flex flex-col p-2 lg:p-4 w-full gap-4 items-center">
         {children}
       </div>
       <div className="relative w-full">
