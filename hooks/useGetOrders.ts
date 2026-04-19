@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from "@store";
-import { handlePendingOrders } from "@store/globalSlice";
-import { PendingOrdersFetchResponse } from "@types";
+import { handlePendingOrdersSide } from "@store/globalSlice";
+// import { PendingOrdersFetchResponse } from "@types";
 import axios from "axios";
 import {
   Dispatch,
@@ -24,7 +24,7 @@ function useGetOrders(
   const dispatch = useDispatch<AppDispatch>();
 
   const [loading, setLoading] = useState(true);
-  const [pageData, setPageData] = useState<PendingOrdersFetchResponse>({
+  const [pageData, setPageData] = useState({
     count: 0,
     orders: [],
   });
@@ -49,8 +49,8 @@ function useGetOrders(
         }
       );
       console.log(response);
-      const { data }: { data: PendingOrdersFetchResponse } = response;
-      dispatch(handlePendingOrders({ status: sideStatus.status, data: data }));
+      const { data } = response;
+      // dispatch(handlePendingOrders({ status: sideStatus.status, data: data }));
       setPageData(data);
     } catch (err) {
       console.log(err);
