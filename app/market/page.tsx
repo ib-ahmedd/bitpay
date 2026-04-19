@@ -31,20 +31,11 @@ function MarketPage() {
   } = useSelector((state: RootState) => state.global);
   const dispatch = useDispatch<AppDispatch>();
 
-  const storedMarketParams: MarketParams = handleLocalStorage(
-    "GET",
-    "marketParams"
-  );
-
   const [fetch, setFetch] = useState(false);
-  const [marketParams, setMarketParams] = useState(
-    storedMarketParams
-      ? storedMarketParams
-      : {
-          side: "0",
-          limit: "5000",
-        }
-  );
+  const [marketParams, setMarketParams] = useState({
+    side: "0",
+    limit: "5000",
+  });
   const [loading, setLoading] = useState(false);
 
   function handleReload() {
@@ -103,6 +94,14 @@ function MarketPage() {
       }
     }
   }, [getMarketAds, fetch, apploaded, isLoggedIn, marketAds]);
+
+  useEffect(() => {
+    const storedMarketParams: MarketParams = handleLocalStorage(
+      "GET",
+      "marketParams"
+    );
+    setMarketParams(storedMarketParams);
+  }, []);
 
   return (
     <main>
