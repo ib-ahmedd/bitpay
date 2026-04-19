@@ -3,8 +3,15 @@ import AuthSubmitBtn from "./AuthSubmitBtn";
 import AuthFormContainer from "./AuthFormContainer";
 import { useContext } from "react";
 import { AuthPageContext } from "./AuthPageContext";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@store";
+import { useRouter } from "next/navigation";
+import { handleSiteLogin } from "@store/globalSlice";
 
 function LoginModal() {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   function handleModalPosition() {
     const positionOnScreen = "translate-x-0 opacity-100";
     const positionLeftOfScreen = "translate-x-[-100%] opacity-0";
@@ -23,14 +30,30 @@ function LoginModal() {
       return positionLeftOfScreen;
     }
   }
-  const { onScreen, setOnScreen, handleUserDetails, userDetails } =
-    useContext(AuthPageContext);
+  const { apiLink } = useSelector((state: RootState) => state.global);
+  const { onScreen, setOnScreen, userDetails } = useContext(AuthPageContext);
   const { email, password } = userDetails;
+
+  async function handleLogin() {
+    try {
+      const response = await axios.post(apiLink + "/auth/login", {
+        email: email,
+        password: password,
+      });
+      const { data } = response;
+
+      dispatch(handleSiteLogin(data));
+      localStorage.setItem("userDetails", JSON.stringify(data));
+      router.push("/market");
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <AuthFormContainer
       errorMessage=""
       handleModalPosition={handleModalPosition}
-      handleSubmit={() => {}}
+      handleSubmit={handleLogin}
     >
       <h2 className="text-lg lg:text-2xl font-bold">Sign In</h2>
       <AuthInput
@@ -48,22 +71,22 @@ function LoginModal() {
 
       <AuthSubmitBtn text="Sign In" />
       <div className="flex w-full justify-between px-6">
-        <button
-          className="text-site-orange font-bold underline"
+        <p
+          className="text-site-orange font-bold underline cursor-pointer"
           onClick={() => {
             setOnScreen("forgot-password");
           }}
         >
           Forgot Password
-        </button>
-        <button
-          className="text-site-orange font-bold underline"
+        </p>
+        <p
+          className="text-site-orange font-bold underline cursor-pointer"
           onClick={() => {
             setOnScreen("signup");
           }}
         >
           Sign up
-        </button>
+        </p>
       </div>
     </AuthFormContainer>
   );

@@ -5,40 +5,43 @@ import { faBars, faClose, faCog } from "@fortawesome/free-solid-svg-icons";
 import { navLinksArray } from "../../constants";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import NavbarLink from "./components/NavbarLink";
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
+import MobileNavbarLink from "./components/MobileNavbarLink";
 function Navbar() {
+  const { balanceDetails, pendingPayments } = useSelector(
+    (state: RootState) => state.global
+  );
   const [navOpen, setNavOpen] = useState(false);
   const pathname = usePathname();
-
   if (pathname === "/auth") {
     return <></>;
   } else {
     return (
       <>
         <nav className="sticky z-10 -top-20 transition duration-300 bg-site-lighter-grey flex justify-between items-center w-full py-2 px-4 xl:px-8 border border-border-grey mx-auto my-4 xl:mt-8 rounded-full shadow-x">
-          <a href="/" className="font-bold text-lg md:text-xl xl:text-2xl">
-            DayarNG
-          </a>
+          <Link href="/" className="font-bold text-lg md:text-xl xl:text-2xl">
+            BITPAY
+          </Link>
           <div className=" hidden md:flex gap-4 lg:gap-8">
             {navLinksArray.map((item) => (
-              <a
-                className="font-semibold text-sm lg:text-base hover:text-site-orange"
-                href={item.href}
-                key={item.title}
-              >
-                {item.title}
-              </a>
+              <NavbarLink key={item.title} {...item} />
             ))}
           </div>
 
-          <div className="flex justify-between gap-2 items-center font-bold md:hidden">
-            <p className="border-r pr-2 border-white">$10</p>
-            <p>N1,700,200</p>
+          <div className="flex justify-between gap-2 items-center font-bold md:hidden text-sm">
+            <p className="border-r pr-2 border-white">
+              ${Number(balanceDetails.walletBalance).toFixed(2)}
+            </p>
+            <p>N{balanceDetails.bankBalance}</p>
           </div>
 
           <div className="flex  items-center gap-3 text-sm relative">
-            <a>
+            <Link href="/">
               <FontAwesomeIcon icon={faCog as IconProp} />
-            </a>
+            </Link>
 
             <button
               className="block md:hidden relative"
@@ -46,9 +49,11 @@ function Navbar() {
                 setNavOpen(true);
               }}
             >
-              <span className="absolute bg-site-orange w-6 h-6 rounded-full text-white -top-3 -right-3 font-bold border border-white">
-                3
-              </span>
+              {pendingPayments.count > 0 && (
+                <span className="absolute bg-site-orange w-6 h-6 rounded-full text-white -top-3 -right-3 font-bold border border-white">
+                  {pendingPayments.count}
+                </span>
+              )}
               <FontAwesomeIcon icon={faBars as IconProp} className="text-lg" />
             </button>
           </div>
@@ -69,16 +74,11 @@ function Navbar() {
           </button>
           <div className="flex flex-col gap-4">
             {navLinksArray.map((item) => (
-              <a
-                className="font-semibold py-2 border-b"
+              <MobileNavbarLink
                 key={item.title}
-                onClick={() => {
-                  setNavOpen(false);
-                }}
-              >
-                {" "}
-                {item.title}
-              </a>
+                {...item}
+                setNavOpen={setNavOpen}
+              />
             ))}
           </div>
         </div>

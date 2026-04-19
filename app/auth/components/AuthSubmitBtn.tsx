@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthPageContext } from "./AuthPageContext";
 
 function AuthSubmitBtn({ text }: AuthSubmitBtnProps) {
-  const { loading } = useContext(AuthPageContext);
+  const { loading, setErrorMessage } = useContext(AuthPageContext);
   return (
     <>
       {loading ? (
@@ -14,7 +14,12 @@ function AuthSubmitBtn({ text }: AuthSubmitBtnProps) {
           Processing...
         </button>
       ) : (
-        <button className="w-full bg-site-orange py-3 rounded-full font-bold hover:bg-site-orange-hover">
+        <button
+          className="w-full bg-site-orange py-3 rounded-full font-bold hover:bg-site-orange-hover"
+          onClick={() => {
+            setErrorMessage("");
+          }}
+        >
           {text}
         </button>
       )}

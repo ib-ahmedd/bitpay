@@ -39,6 +39,7 @@ module.exports = {
         "site-green": "#6ee7b7",
         "site-transparent-green": "rgba(0, 231, 0, 0.1)",
         "site-transparent-red": "rgba(256, 50, 50, 0.1)",
+        "popup-red": "#3c2727",
         "site-green-light": "#047857",
       },
       backgroundImage: {},

@@ -67,14 +67,14 @@ function EmailModal() {
       />
       <AuthSubmitBtn text="Sign Up" />
       <div className="w-full flex px-6 ">
-        <button
-          className="text-site-orange font-bold underline"
+        <p
+          className="text-site-orange font-bold underline cursor-pointer"
           onClick={() => {
             setOnScreen("login");
           }}
         >
           Sign in
-        </button>
+        </p>
       </div>
     </AuthFormContainer>
   );

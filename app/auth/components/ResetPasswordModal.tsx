@@ -6,8 +6,7 @@ import { useContext } from "react";
 import { AuthPageContext } from "./AuthPageContext";
 
 function ResetPasswordModal() {
-  const { onScreen, setOnScreen, handleUserDetails } =
-    useContext(AuthPageContext);
+  const { onScreen, setOnScreen, setLoading } = useContext(AuthPageContext);
   function handleModalPosition() {
     const positionOnScreen = "translate-x-0 opacity-100";
     const positionLeftOfScreen = "translate-x-[-100%] opacity-0";
@@ -20,7 +19,9 @@ function ResetPasswordModal() {
   }
 
   function handleResetPassword() {
+    setLoading(true);
     setOnScreen("login");
+    setLoading(false);
   }
   return (
     <AuthFormContainer

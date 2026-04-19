@@ -3,7 +3,6 @@ import ErrorMessageBox from "./ErrorMessageBox";
 
 function AuthFormContainer({
   children,
-  errorMessage,
   handleModalPosition,
   handleSubmit,
 }: AuthFormContainerProps) {
@@ -19,7 +18,7 @@ function AuthFormContainer({
         {children}
       </div>
       <div className="relative w-full">
-        {errorMessage && <ErrorMessageBox errorMessage={errorMessage} />}
+        <ErrorMessageBox />
       </div>
     </form>
   );

@@ -6,8 +6,14 @@ import AuthFormContainer from "./AuthFormContainer";
 import { AuthPageContext } from "./AuthPageContext";
 
 function OTPModal() {
-  const { onScreen, setOnScreen, userDetails, setAuthToken } =
-    useContext(AuthPageContext);
+  const {
+    onScreen,
+    setOnScreen,
+    userDetails,
+    setAuthAccessToken,
+    setLoading,
+    setErrorMessage,
+  } = useContext(AuthPageContext);
   const [code, setCode] = useState("");
   const { email } = userDetails;
   function handleModalPosition() {
@@ -25,6 +31,7 @@ function OTPModal() {
   }
 
   async function handleSubmitOTP() {
+    setLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/verify-otp",
@@ -35,17 +42,18 @@ function OTPModal() {
       );
 
       const { data } = response;
-      if (setAuthToken) {
-        setAuthToken(data);
-      }
+
+      setAuthAccessToken(data);
       if (onScreen === "reset-otp") {
         setOnScreen("reset-password");
       } else if (onScreen === "otp") {
         setOnScreen("complete");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      setErrorMessage(err.response.data);
     }
+    setLoading(false);
   }
   return (
     <AuthFormContainer
@@ -68,17 +76,17 @@ function OTPModal() {
       />
       <AuthSubmitBtn text="Verify" />
       <div className="flex justify-between w-full px-6">
-        <button
-          className="text-site-orange font-bold underline"
+        <p
+          className="text-site-orange font-bold underline cursor-pointer"
           onClick={() => {
             setOnScreen(onScreen === "otp" ? "signup" : "forgot-password");
           }}
         >
           Wrong Email?
-        </button>
-        <button className="text-site-orange font-bold underline">
+        </p>
+        <p className="text-site-orange font-bold underline cursor-pointer">
           Resend OTP
-        </button>
+        </p>
       </div>
     </AuthFormContainer>
   );

@@ -6,10 +6,12 @@ import { useContext } from "react";
 import { AuthPageContext } from "./AuthPageContext";
 
 function ForgotPasswordModal() {
-  const { onScreen, setOnScreen, userDetails, handleUserDetails } =
+  const { onScreen, setOnScreen, userDetails, setLoading } =
     useContext(AuthPageContext);
   function handleRequestOTP() {
+    setLoading(true);
     setOnScreen("reset-otp");
+    setLoading(false);
   }
 
   function handleModalPosition() {
@@ -38,7 +40,7 @@ function ForgotPasswordModal() {
       handleModalPosition={handleModalPosition}
       handleSubmit={handleRequestOTP}
     >
-      <h2 className="text-2xl font-bold">Forgot Password</h2>
+      <h2 className="text-2xl font-bold cursor-pointer">Forgot Password</h2>
       <AuthInput
         type="email"
         name="email"
@@ -47,14 +49,14 @@ function ForgotPasswordModal() {
       />
       <AuthSubmitBtn text="Reset Password" />
       <div className="w-full flex justify-end px-6 ">
-        <button
-          className="text-site-orange font-bold underline"
+        <p
+          className="text-site-orange font-bold underline cursor-pointer"
           onClick={() => {
             setOnScreen("login");
           }}
         >
           Sign in
-        </button>
+        </p>
       </div>
     </AuthFormContainer>
   );

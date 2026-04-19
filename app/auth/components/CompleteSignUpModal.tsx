@@ -19,10 +19,17 @@ function CompleteSignUpModal() {
     }
   }
 
-  const { onScreen, userDetails, authToken } = useContext(AuthPageContext);
+  const {
+    onScreen,
+    userDetails,
+    authAccessToken,
+    setLoading,
+    setErrorMessage,
+  } = useContext(AuthPageContext);
   const { api_key, api_secret, email, password, confPassword } = userDetails;
 
   async function handleSubmit() {
+    setLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/register",
@@ -34,14 +41,15 @@ function CompleteSignUpModal() {
         },
         {
           headers: {
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${authAccessToken}`,
           },
         }
       );
-      console.log(response);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      setErrorMessage(err.response.data);
     }
+    setLoading(false);
   }
   return (
     <AuthFormContainer
